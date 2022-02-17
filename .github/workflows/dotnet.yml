@@ -30,6 +30,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: sa-east-1
     - name: Deploy Marketplace project
-      working-directory: ../Marketplace
+      uses: actions/checkout@v2
+      working-directory: ./Marketplace
       run: dotnet lambda deploy-serverless
       
