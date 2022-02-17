@@ -1,4 +1,4 @@
-name: .NET
+name: Deploy AWS
 
 on:
   push:
@@ -30,6 +30,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: sa-east-1
     - name: Deploy Marketplace project
-      working-directory: Marketplace
+      working-directory: ../Marketplace
       run: dotnet lambda deploy-serverless
       
