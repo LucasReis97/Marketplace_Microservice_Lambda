@@ -19,6 +19,12 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Deploy Marketplace
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: enter Marketplace folder
       run: cd Marketplace
-           dotnet lambda deploy-serverless
+    - name: Deploy Marketplace
+      run: dotnet lambda deploy-serverless
+      
