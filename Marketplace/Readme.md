@@ -58,12 +58,12 @@ If already installed check if new version is available.
 
 Execute unit tests
 ```
-    cd "Receiver/test/Receiver.Tests"
+    cd "Marketplace/test/Marketplace.Tests"
     dotnet test
 ```
 
 Deploy application
 ```
-    cd "Receiver/src/Receiver"
+    cd "Marketplace/src/Marketplace"
     dotnet lambda deploy-serverless
 ```

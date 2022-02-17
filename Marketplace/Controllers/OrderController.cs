@@ -4,7 +4,7 @@ using Shared.Utils;
 using System;
 using System.Threading.Tasks;
 
-namespace Receiver.Controllers
+namespace Marketplace.Controllers
 {
     [Route("api/[controller]")]
     public class OrderController : ControllerBase

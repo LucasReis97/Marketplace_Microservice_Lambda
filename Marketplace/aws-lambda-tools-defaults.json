@@ -10,9 +10,9 @@
     "region"      : "sa-east-1",
     "configuration" : "Release",
     "framework"     : "netcoreapp3.1",
-    "s3-prefix"     : "Receiver/",
+    "s3-prefix"     : "Marketplace/",
     "template"      : "serverless.template",
     "template-parameters" : "",
-    "s3-bucket"           : "training-receiver",
-    "stack-name"          : "training-receiver"
+    "s3-bucket"           : "mml-marketplace",
+    "stack-name"          : "mml-marketplace"
 }

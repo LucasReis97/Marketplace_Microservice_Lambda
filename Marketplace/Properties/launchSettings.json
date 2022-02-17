@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Receiver": {
+    "Marketplace": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
