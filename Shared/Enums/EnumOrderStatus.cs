@@ -1,9 +1,9 @@
 ﻿namespace Shared.Enums
 {
-    public enum StatusOrder
+    public enum EnumOrderStatus
     {
         Received,
-        Reservved,
+        Reserved,
         Paid,
         Billed
     }

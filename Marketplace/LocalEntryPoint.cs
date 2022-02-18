@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Marketplace
 {
-    public class LocalEntryPoint
+    public static class LocalEntryPoint
     {
         public static void Main(string[] args)
         {

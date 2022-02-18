@@ -23,7 +23,7 @@ namespace Shared.Models
         public Payment Payment { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public StatusOrder StatusOrder { get; set; }
+        public EnumOrderStatus OrderStatus { get; set; }
 
         public string CanceledReason { get; set; }
 
