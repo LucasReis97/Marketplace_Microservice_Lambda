@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Receiver", "Receiver\Receiv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reserver", "Reserver\Reserver.csproj", "{C95F116A-8C1B-4561-B707-4A0C8748F83F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payer", "Payer\Payer.csproj", "{4C8688CD-5085-4746-B7B7-36DEBA8CFDE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C95F116A-8C1B-4561-B707-4A0C8748F83F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C95F116A-8C1B-4561-B707-4A0C8748F83F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C95F116A-8C1B-4561-B707-4A0C8748F83F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C8688CD-5085-4746-B7B7-36DEBA8CFDE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C8688CD-5085-4746-B7B7-36DEBA8CFDE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C8688CD-5085-4746-B7B7-36DEBA8CFDE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C8688CD-5085-4746-B7B7-36DEBA8CFDE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

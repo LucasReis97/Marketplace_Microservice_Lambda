@@ -26,22 +26,30 @@ namespace Receiver
                 if (record.EventName == "INSERT")
                 {
                     var order = record.Dynamodb.NewImage.ToObject<Order>();
-                    order.OrderStatus = EnumOrderStatus.Received;
-                    try
+                    if (order.OrderStatus == EnumOrderStatus.Created)
                     {
-                        await UpdateAmountOrder(order);
-                        await AmazonUtils.SendToQueue(EnumQueueSQS.order, order);
-                        context.Logger.LogLine($"Order collection with success - id: {order.Id}");
-
+                        order.OrderStatus = EnumOrderStatus.Received;
+                        try
+                        {
+                            await UpdateAmountOrder(order);
+                            await AmazonUtils.SendToQueue(EnumQueueSQS.received, order);
+                            context.Logger.LogLine($"Order collection with success - id: {order.Id}");
+                        }
+                        catch (Exception ex)
+                        {
+                            context.Logger.LogLine($"Error: '{ex.Message}'");
+                            order.CanceledReason = ex.Message;
+                            order.Canceled = true;
+                            await AmazonUtils.SendToQueue(EnumQueueSNS.failure, order);
+                        }
+                        await order.SaveOrder();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        context.Logger.LogLine($"Error: '{ex.Message}'");
-                        order.CanceledReason = ex.Message;
-                        order.Canceled = true;
-                        await AmazonUtils.SendToQueue(EnumQueueSNS.failure, order);
+                        context.Logger.LogLine($"this request has already passed through the receiver stage - id: {order.Id} OrderStatus: {order.OrderStatus}");
+                        await AmazonUtils.SendToQueue(EnumQueueSQS.received, order);
+                        context.Logger.LogLine($"Submitting this request to the next step");
                     }
-                    await order.SaveOrder();
                 }
             }
         }
@@ -53,10 +61,10 @@ namespace Receiver
                 var productStock = await GetProductDynamo(product.Id);
                 if (productStock == null) throw new InvalidOperationException($"Product not found - id: {product.Id}");
                 product.Name = productStock.Name;
-                product.Value = productStock.Value;
+                product.Price = productStock.Price;
             }
 
-            var totalAmountUpdated = order.Products.Sum(x => x.Value * x.Quantity);
+            var totalAmountUpdated = order.Products.Sum(x => x.Price * x.Quantity);
             if (order.Amount != 0 && order.Amount != totalAmountUpdated) throw new InvalidOperationException($"The expected value is {totalAmountUpdated} and the sent value was {order.Amount}");
             order.Amount = totalAmountUpdated;
         }

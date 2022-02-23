@@ -13,10 +13,9 @@ namespace Marketplace.Controllers
         public async Task Post([FromBody] Order order)
         {
             order.Id = Guid.NewGuid().ToString();
+            order.OrderStatus = Shared.Enums.EnumOrderStatus.Created;
             order.CreatedDate = DateTime.UtcNow;
-
             await order.SaveOrder();
-
             Console.WriteLine($"Order created successfully: id {order.Id}");
         }
     }

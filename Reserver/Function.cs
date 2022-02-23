@@ -20,6 +20,7 @@ namespace Reserver
     public class Function
     {
         private AmazonDynamoDBClient AmazonDynamoDBClient { get; }
+
         public Function()
         {
             AmazonDynamoDBClient = new AmazonDynamoDBClient(RegionEndpoint.SAEast1);
@@ -36,26 +37,35 @@ namespace Reserver
         private async Task ProcessMessageAsync(SQSMessage message, ILambdaContext context)
         {
             var order = JsonConvert.DeserializeObject<Order>(message.Body);
-            order.OrderStatus = EnumOrderStatus.Reserved;
-            foreach (var product in order.Products)
+            if (order.OrderStatus == EnumOrderStatus.Received)
             {
-                try
+                order.OrderStatus = EnumOrderStatus.Reserved;
+                foreach (var product in order.Products)
                 {
-                    await ReduceStockProducts(product);
-                    product.Reserved = true;
-                    context.Logger.LogLine($"Product reduced from stock successfully - id:{product.Id}, quantity:{product.Quantity}");
+                    try
+                    {
+                        await ReduceStockProducts(product);
+                        product.Reserved = true;
+                        context.Logger.LogLine($"Product reduced from stock successfully - id:{product.Id}, quantity:{product.Quantity}");
+                    }
+                    catch
+                    {
+                        order.Canceled = true;
+                        order.CanceledReason = $"Product out of stock - id:{product.Id}, quantity:{product.Quantity}";
+                        context.Logger.LogLine("Error: " + order.CanceledReason);
+                        await OrderCanceled(order, context);
+                        break;
+                    }
                 }
-                catch
-                {
-                    order.Canceled = true;
-                    order.CanceledReason = $"Product out of stock - id:{product.Id}, quantity:{product.Quantity}";
-                    context.Logger.LogLine("Error: " + order.CanceledReason);
-                    await OrderCanceled(order, context);
-                    break;
-                }
+                if (!order.Canceled) await AmazonUtils.SendToQueue(EnumQueueSQS.reserved, order);
+                await order.SaveOrder();
             }
-            if (!order.Canceled) await AmazonUtils.SendToQueue(EnumQueueSQS.reserved, order);
-            await order.SaveOrder();
+            else
+            {
+                context.Logger.LogLine($"this request has already passed through the reserver stage - id: {order.Id} OrderStatus: {order.OrderStatus}");
+                await AmazonUtils.SendToQueue(EnumQueueSQS.reserved, order);
+                context.Logger.LogLine($"Submitting this request to the next step");
+            }
         }
 
         private async Task OrderCanceled(Order order, ILambdaContext context)

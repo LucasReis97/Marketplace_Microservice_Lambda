@@ -2,6 +2,7 @@
 {
     public enum EnumOrderStatus
     {
+        Created,
         Received,
         Reserved,
         Paid,

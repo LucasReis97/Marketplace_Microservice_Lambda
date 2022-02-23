@@ -1,6 +1,4 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Shared.Enums;
 using System;
 using System.Collections.Generic;
@@ -22,7 +20,6 @@ namespace Shared.Models
 
         public Payment Payment { get; set; }
 
-        [JsonConverter(typeof(StringEnumConverter))]
         public EnumOrderStatus OrderStatus { get; set; }
 
         public string CanceledReason { get; set; }

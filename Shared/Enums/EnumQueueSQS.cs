@@ -2,7 +2,7 @@
 {
     public enum EnumQueueSQS
     {
-        order,
+        received,
         reserved,
         paid
     }
