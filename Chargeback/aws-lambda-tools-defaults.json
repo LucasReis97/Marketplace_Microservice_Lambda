@@ -13,12 +13,13 @@
     "function-runtime" : "dotnetcore3.1",
     "function-memory-size" : 256,
     "function-timeout"     : 30,
-    "function-handler"     : "Chageback::Chageback.Function::FunctionHandler",
+    "function-handler"     : "Chargeback::Chargeback.Function::FunctionHandler",
     "function-name"        : "chargeback",
     "package-type"         : "Zip",
     "function-role"        : "arn:aws:iam::502028380405:role/lambda_acesso_total",
     "function-architecture" : "x86_64",
     "tracing-mode"          : "PassThrough",
     "environment-variables" : "",
-    "image-tag"             : ""
+    "image-tag"             : "",
+    "function-description"  : ""
 }

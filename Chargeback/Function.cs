@@ -9,7 +9,7 @@ using static Amazon.Lambda.SNSEvents.SNSEvent;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace Chageback
+namespace Chargeback
 {
     public class Function
     {

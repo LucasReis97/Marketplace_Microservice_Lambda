@@ -40,12 +40,12 @@ If already installed check if new version is available.
 
 Execute unit tests
 ```
-    cd "Chageback/test/Chageback.Tests"
+    cd "Chargeback/test/Chargeback.Tests"
     dotnet test
 ```
 
 Deploy function to AWS Lambda
 ```
-    cd "Chageback/src/Chageback"
+    cd "Chargeback/src/Chargeback"
     dotnet lambda deploy-function
 ```
