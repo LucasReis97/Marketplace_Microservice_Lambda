@@ -6,6 +6,7 @@
         Received,
         Reserved,
         Paid,
-        Billed
+        Billed,
+        Chargeback
     }
 }

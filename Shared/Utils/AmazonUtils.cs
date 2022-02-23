@@ -3,6 +3,8 @@ using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
+using Amazon.SimpleNotificationService;
+using Amazon.SimpleNotificationService.Model;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 using Newtonsoft.Json;
@@ -44,7 +46,14 @@ namespace Shared.Utils
 
         public static async Task SendToQueue(EnumQueueSNS queue, Order order)
         {
-            await Task.CompletedTask;
+            var json = JsonConvert.SerializeObject(order);
+            var client = new AmazonSimpleNotificationServiceClient(RegionEndpoint.SAEast1);
+            var request = new PublishRequest
+            {
+                Message = json,
+                TopicArn = $"arn:aws:sns:sa-east-1:502028380405:{queue}"
+            };
+            await client.PublishAsync(request);
         }
 
     }

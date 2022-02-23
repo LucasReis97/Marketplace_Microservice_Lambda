@@ -44,3 +44,6 @@ jobs:
     - name: Lambda Function Payer
       working-directory: ./Payer
       run: dotnet lambda deploy-function
+    - name: Lambda Function Chargeback
+      working-directory: ./Chargeback
+      run: dotnet lambda deploy-function
