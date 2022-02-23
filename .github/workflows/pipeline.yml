@@ -32,15 +32,15 @@ jobs:
         aws-region: sa-east-1
     - name: AWS CLI
       run: dotnet tool install -g Amazon.Lambda.Tools
-    - name: Web Api: Marketplace
+    - name: Web Api Marketplace
       working-directory: ./Marketplace
       run: dotnet lambda deploy-serverless
-    - name: Lambda Function: Receiver
+    - name: Lambda Function Receiver
       working-directory: ./Receiver
-      run: dotnet lambda deploy-serverless
-    - name: Lambda Function: Reserver
+      run: dotnet lambda deploy-function
+    - name: Lambda Function Reserver
       working-directory: ./Reserver
-      run: dotnet lambda deploy-serverless
-    - name: Lambda Function: Payer
+      run: dotnet lambda deploy-function
+    - name: Lambda Function Payer
       working-directory: ./Payer
-      run: dotnet lambda deploy-serverless
+      run: dotnet lambda deploy-function
