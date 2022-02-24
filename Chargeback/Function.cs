@@ -24,7 +24,6 @@ namespace Chargeback
                 await ProcessRecordAsync(record, context);
             }
         }
-
         private async Task ProcessRecordAsync(SNSRecord record, ILambdaContext context)
         {
             //Need implement api to refund

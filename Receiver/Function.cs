@@ -37,7 +37,7 @@ namespace Receiver
                         }
                         catch (Exception ex)
                         {
-                            context.Logger.LogLine($"Error: '{ex.Message}'");
+                            context.Logger.LogLine($"Error: '{ex.StackTrace}'");
                             order.CanceledReason = ex.Message;
                             order.Canceled = true;
                             await AmazonUtils.SendToQueue(EnumQueueSNS.failure, order);
@@ -56,6 +56,7 @@ namespace Receiver
 
         private async Task UpdateAmountOrder(Order order)
         {
+
             foreach (var product in order.Products)
             {
                 var productStock = await GetProductDynamo(product.Id);
@@ -67,6 +68,7 @@ namespace Receiver
             var totalAmountUpdated = order.Products.Sum(x => x.Price * x.Quantity);
             if (order.Amount != 0 && order.Amount != totalAmountUpdated) throw new InvalidOperationException($"The expected value is {totalAmountUpdated} and the sent value was {order.Amount}");
             order.Amount = totalAmountUpdated;
+
         }
 
         private async Task<Product> GetProductDynamo(string id)

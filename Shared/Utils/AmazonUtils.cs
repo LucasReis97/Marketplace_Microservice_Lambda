@@ -42,6 +42,7 @@ namespace Shared.Utils
                 MessageBody = json
             };
             await client.SendMessageAsync(request);
+
         }
 
         public static async Task SendToQueue(EnumQueueSNS queue, Order order)
